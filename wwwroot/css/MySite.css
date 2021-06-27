@@ -1,7 +1,30 @@
-﻿
+﻿/*Themes*/
+.TheMainColor {
+    background-color: #FEF8F5;
+}
 
 .first-row {
-    background-color: #FEF8F5;
     padding:50px;
+}
+
+.second-row {
+    text-align: center;
+    padding: 50px;
+}
+
+a.navbar-brand .logo{
+    width:30px;
+    height:auto;
+}
+.theCards {
+    text-align: center;
+    font-size: 30px;
+    border-radius: 10px 10px;
+    color: #F9BB00;
+    padding:0px 45px 0px 45px;
+
+}
+.ptext{
+    font-size:10px;
 }
 
