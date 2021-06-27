@@ -3,14 +3,15 @@
     background-color: #FEF8F5;
 }
 
-.first-row {
+.pagepadding {
     padding:50px;
 }
 
-.second-row {
+.textCenterer {
     text-align: center;
-    padding: 50px;
 }
+
+
 
 a.navbar-brand .logo{
     width:30px;
@@ -28,3 +29,16 @@ a.navbar-brand .logo{
     font-size:10px;
 }
 
+.footerstyle{
+    border-top:none;
+    padding:0 
+}
+
+.social-media {
+    border-radius: 50px;
+    background-color: #F9BB00;
+    padding:10px;
+    color:#fff;
+    font-size:25px;
+    margin:0px 5px 0px 5px;
+}

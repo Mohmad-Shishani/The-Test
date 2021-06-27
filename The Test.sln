@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31410.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "The Test", "The Test.csproj", "{EE668BEA-8277-412C-872C-1EAD4418A7E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MB.Taxi.Entities", "..\MB.Taxi.Entities\MB.Taxi.Entities.csproj", "{D364CE0A-211F-4217-ADC6-1F45786B8B5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MB.Taxi.Utils", "..\MB.Taxi.Utils\MB.Taxi.Utils.csproj", "{21B4EF7B-20A6-49F4-91E4-6D8E0AAC92D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{EE668BEA-8277-412C-872C-1EAD4418A7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE668BEA-8277-412C-872C-1EAD4418A7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE668BEA-8277-412C-872C-1EAD4418A7E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D364CE0A-211F-4217-ADC6-1F45786B8B5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D364CE0A-211F-4217-ADC6-1F45786B8B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D364CE0A-211F-4217-ADC6-1F45786B8B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D364CE0A-211F-4217-ADC6-1F45786B8B5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21B4EF7B-20A6-49F4-91E4-6D8E0AAC92D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21B4EF7B-20A6-49F4-91E4-6D8E0AAC92D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21B4EF7B-20A6-49F4-91E4-6D8E0AAC92D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21B4EF7B-20A6-49F4-91E4-6D8E0AAC92D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

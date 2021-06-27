@@ -18,7 +18,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="~/imgs/logo.png" class="logo"/>   SIMTAXI
+                    <img src="~/imgs/logo.png" class="logo" />   SIMTAXI
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -38,13 +38,90 @@
             </div>
         </nav>
     </header>
-    <main role="main" class="pb-3">
+    <main role="main" class="mb-3">
         @RenderBody()
     </main>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - The_Test - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class=" card-footer bg-light text-dark footerstyle">
+
+        <div class="row TheMainColor textCenterer pt-4">
+            <div class="offset-4 col-md-3">
+                <h4>Join Our Newsletter</h4>
+
+            </div>
+        </div>
+        <div class="row TheMainColor textCenterer">
+            <div class="offset-3 col-md-5 ">
+                <p class="textCenterer">Maecenas vestibulum el conv convallis eros vel convallis bulum conva. </p>
+            </div>
+        </div>
+        <div class="row TheMainColor mb-3">
+            <div class="offset-3 col-md-6">
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-warning btn-secondary text-light" type="button">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row bg-light p-3">
+            <div class="col-md-3 bg-light text-dark">
+                <h3 class="">SimTaxi</h3>
+                <p>Main Street</p>
+                <p>Amman, Sports Circle</p>
+                <p class="pb-2">Jordan</p>
+                <p class="text-dark">Phone: <span class="text-muted">+96277788899</span></p>
+                <p class="text-dark">Email: <span class="text-muted">info@example.com</span></p>
+            </div>
+            <div class="col-md-3 bg-light p-4">
+                <h5>Useful Links</h5>
+                <p><i class="fas fa-chevron-right text-warning"></i> Home</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> About us</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> Services</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> Terms of service</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> Privacy policy</p>
+            </div>
+            <div class="col-md-3 bg-light p-4">
+                <h5>Our Services</h5>
+                <p><i class="fas fa-chevron-right text-warning"></i> Web Development</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> Graphic Design</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> WEB Design</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> Product Management</p>
+                <p><i class="fas fa-chevron-right text-warning"></i> Markting</p>
+            </div>
+            <div class="col-md-3 bg-light p-4">
+                <h5>Follow us on Social Networks</h5>
+                <p>Nulla sagittis lacinia felis, ac mollis sem tempor quis.</p>
+                <div class="row">
+                    <a href="#">
+                        <i class="fab fa-twitter social-media "></i>
+                    </a>
+                    <a href="https://web.facebook.com/idrees.haddad.7?_rdc=1&_rdr">
+                        <i class="fab fa-facebook social-media"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-instagram-square social-media"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-skype social-media"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-linkedin social-media"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="row TheMainColor">
+            <div class="pl-5 col-md-6 text-muted">
+                ©Copyright <a href="#">Mibax</a>. All Rights Reserved
+            </div>
+            <div class="offset-1 col-md-4">
+
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
