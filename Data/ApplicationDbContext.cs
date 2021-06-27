@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MB.Taxi.Entities;
 
 namespace The_Test.Data
 {
@@ -12,5 +13,9 @@ namespace The_Test.Data
             : base(options)
         {
         }
+        public DbSet<MB.Taxi.Entities.Car> Car { get; set; }
+        public DbSet<MB.Taxi.Entities.Driver> Driver { get; set; }
+        public DbSet<MB.Taxi.Entities.Booking> Booking { get; set; }
+        public DbSet<MB.Taxi.Entities.Passenger> Passenger { get; set; }
     }
 }
