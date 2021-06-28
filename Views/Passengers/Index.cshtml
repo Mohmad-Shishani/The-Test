@@ -1,15 +1,15 @@
-﻿@model IEnumerable<MB.Taxi.Entities.Passenger>
+﻿@model IEnumerable<The_Test.Models.PassengerVM>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Passengers</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="thedatatable table">
     <thead>
         <tr>
             <th>
@@ -24,28 +24,30 @@
             <th>
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
-            <th></th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var Passenger in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => Passenger.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => Passenger.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                @Html.DisplayFor(modelItem => Passenger.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gender)
+                @Html.DisplayFor(modelItem => Passenger.Gender)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@Passenger.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@Passenger.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@Passenger.Id">Delete</a>
             </td>
         </tr>
 }

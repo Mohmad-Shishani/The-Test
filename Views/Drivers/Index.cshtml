@@ -1,15 +1,16 @@
-﻿@model IEnumerable<MB.Taxi.Entities.Driver>
+﻿
+@model IEnumerable<The_Test.Models.DriverVM>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Drivers</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="thedatatable table">
     <thead>
         <tr>
             <th>
@@ -24,30 +25,42 @@
             <th>
                 @Html.DisplayNameFor(model => model.Rating)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+
+            <th>
+                
+            </th>
+
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var Driver in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => Driver.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Driver.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Driver.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Driver.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Driver.Gender)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@Driver.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@Driver.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@Driver.Id">Delete</a> |
+                    <a asp-action="DriverCars" data-toggle="tooltip" title="Driver's Cars" asp-route-id="@Driver.Id">Add Car</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

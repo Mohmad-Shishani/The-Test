@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using The_Test.Data;
 
 namespace The_Test.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210628053333_Test1")]
+    partial class Test1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,8 @@ namespace The_Test.Data.Migrations
                     b.Property<string>("FromAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsPaid")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
@@ -46,7 +48,7 @@ namespace The_Test.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Booking");
                 });
 
             modelBuilder.Entity("MB.Taxi.Entities.Car", b =>
@@ -60,9 +62,6 @@ namespace The_Test.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("CarType")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("DriverId")
                         .HasColumnType("int");
 
                     b.Property<int>("FuelType")
@@ -81,9 +80,7 @@ namespace The_Test.Data.Migrations
 
                     b.HasIndex("BookingId");
 
-                    b.HasIndex("DriverId");
-
-                    b.ToTable("Cars");
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("MB.Taxi.Entities.Driver", b =>
@@ -94,6 +91,9 @@ namespace The_Test.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CarId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -115,6 +115,8 @@ namespace The_Test.Data.Migrations
 
                     b.HasIndex("BookingId");
 
+                    b.HasIndex("CarId");
+
                     b.ToTable("Drivers");
                 });
 
@@ -124,9 +126,6 @@ namespace The_Test.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BookingId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -142,9 +141,7 @@ namespace The_Test.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookingId");
-
-                    b.ToTable("Passengers");
+                    b.ToTable("Passenger");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -349,35 +346,20 @@ namespace The_Test.Data.Migrations
 
             modelBuilder.Entity("MB.Taxi.Entities.Car", b =>
                 {
-                    b.HasOne("MB.Taxi.Entities.Booking", "Booking")
-                        .WithMany("Car")
-                        .HasForeignKey("BookingId");
-
-                    b.HasOne("MB.Taxi.Entities.Driver", "Driver")
+                    b.HasOne("MB.Taxi.Entities.Booking", null)
                         .WithMany("Cars")
-                        .HasForeignKey("DriverId");
-
-                    b.Navigation("Booking");
-
-                    b.Navigation("Driver");
+                        .HasForeignKey("BookingId");
                 });
 
             modelBuilder.Entity("MB.Taxi.Entities.Driver", b =>
                 {
-                    b.HasOne("MB.Taxi.Entities.Booking", "Booking")
-                        .WithMany("Driver")
+                    b.HasOne("MB.Taxi.Entities.Booking", null)
+                        .WithMany("Drivers")
                         .HasForeignKey("BookingId");
 
-                    b.Navigation("Booking");
-                });
-
-            modelBuilder.Entity("MB.Taxi.Entities.Passenger", b =>
-                {
-                    b.HasOne("MB.Taxi.Entities.Booking", "Booking")
-                        .WithMany()
-                        .HasForeignKey("BookingId");
-
-                    b.Navigation("Booking");
+                    b.HasOne("MB.Taxi.Entities.Car", null)
+                        .WithMany("Drivers")
+                        .HasForeignKey("CarId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -433,14 +415,14 @@ namespace The_Test.Data.Migrations
 
             modelBuilder.Entity("MB.Taxi.Entities.Booking", b =>
                 {
-                    b.Navigation("Car");
+                    b.Navigation("Cars");
 
-                    b.Navigation("Driver");
+                    b.Navigation("Drivers");
                 });
 
-            modelBuilder.Entity("MB.Taxi.Entities.Driver", b =>
+            modelBuilder.Entity("MB.Taxi.Entities.Car", b =>
                 {
-                    b.Navigation("Cars");
+                    b.Navigation("Drivers");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,15 +1,15 @@
-﻿@model IEnumerable<MB.Taxi.Entities.Booking>
+﻿@model IEnumerable<The_Test.Models.BookingVM>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Bookings</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="thedatatable table">
     <thead>
         <tr>
             <th>
@@ -34,32 +34,71 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PickUpTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FromAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ToAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPaid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PaymentDate)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>
+                    @booking.PickUpTime.ToString("dddd, dd MMMM yyyy HH:mm")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.FromAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.ToAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.Price)
+                </td>
+                <td>
+                    @if (booking.IsPaid)
+                    {
+                        <i class="fas fa-check-circle" data-toggle="tooltip" data-placement="bottom" title="It's Paid"></i>
+                    }
+
+                    else
+                    {
+                        <i class="fas fa-times-circle " data-toggle="tooltip" data-placement="bottom" title="Where is the Money Lebawski?"></i>
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => booking.PaymentDate)
+                </td>
+                <td>
+
+                    <a asp-action="Edit" asp-route-id="@booking.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@booking.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@booking.Id">Delete</a> |
+                    @if (booking.IsPaid == false)
+                    {
+                        <i class="fab fa-paypal text-primary" data-toggle="modal" data-target="PayForBookingModal_@booking.Id"></i>
+                    }
+
+
+                    <div class="modal fade" id="PayForBookingModal_@booking.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="PayForBookingModalLongTitle">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Do you want to pay for your the Booking?</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <form asp-action="PayForBooking">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

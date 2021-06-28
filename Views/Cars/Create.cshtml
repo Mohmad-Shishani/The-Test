@@ -1,4 +1,5 @@
-﻿@model MB.Taxi.Entities.Car
+﻿@model The_Test.Models.CarVM
+@using MB.Taxi.Utils.Enums
 
 @{
     ViewData["Title"] = "Create";
@@ -27,6 +28,17 @@
                 <input asp-for="MakeYear" class="form-control" />
                 <span asp-validation-for="MakeYear" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="FuelType" class="control-label"></label>
+                <select asp-for="FuelType" asp-items="@Html.GetEnumSelectList<FuelType>()" class="form-control"></select>
+                <span asp-validation-for="FuelType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CarType" class="control-label"></label>
+                <select asp-for="CarType" asp-items="@Html.GetEnumSelectList<CarType>()" class="form-control"></select>
+                <span asp-validation-for="CarType" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

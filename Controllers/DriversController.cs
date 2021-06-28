@@ -1,31 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MB.Taxi.Entities;
 using The_Test.Data;
+using AutoMapper;
+using The_Test.Models;
+using MB.Taxi.Entities;
 
 namespace The_Test.Controllers
 {
     public class DriversController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public DriversController(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+        public DriversController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: Drivers
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Driver.ToListAsync());
+            List<Driver> drivers = await _context
+                                         .Drivers
+                                         .ToListAsync();
+
+            List<DriverVM> driverVMs = _mapper.Map<List<Driver>, List<DriverVM>>(drivers);
+
+            return View(driverVMs);
         }
 
-        // GET: Drivers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +38,43 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var driver = await _context.Driver
+            var driver = await _context
+                .Drivers
+                .Include(driver => driver.Cars)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (driver == null)
             {
                 return NotFound();
             }
 
-            return View(driver);
+            var DriverVM = _mapper.Map<Driver, DriverVM>(driver);
+
+            return View(DriverVM);
         }
 
-        // GET: Drivers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Drivers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,PhoneNumber,Rating")] Driver driver)
+        public async Task<IActionResult> Create(DriverVM driverVM)
         {
             if (ModelState.IsValid)
             {
+                var driver = _mapper.Map<DriverVM, Driver>(driverVM);
+
                 _context.Add(driver);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(driver);
+
+
+            return View(driverVM);
         }
 
-        // GET: Drivers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +82,22 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var driver = await _context.Driver.FindAsync(id);
+            var driver = await _context.Drivers.FindAsync(id);
             if (driver == null)
             {
                 return NotFound();
             }
-            return View(driver);
+
+            var driverVM = _mapper.Map<Driver, DriverVM>(driver);
+
+            return View(driverVM);
         }
 
-        // POST: Drivers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,PhoneNumber,Rating")] Driver driver)
+        public async Task<IActionResult> Edit(int id, DriverVM driverVM)
         {
-            if (id != driver.Id)
+            if (id != driverVM.Id)
             {
                 return NotFound();
             }
@@ -97,12 +106,14 @@ namespace The_Test.Controllers
             {
                 try
                 {
+                    var driver = _mapper.Map<DriverVM, Driver>(driverVM);
+
                     _context.Update(driver);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DriverExists(driver.Id))
+                    if (!DriverExists(driverVM.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +124,11 @@ namespace The_Test.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(driver);
+
+
+            return View(driverVM);
         }
 
-        // GET: Drivers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +136,33 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var driver = await _context.Driver
+            var driver = await _context.Drivers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (driver == null)
             {
                 return NotFound();
             }
+            var driverVM = _mapper.Map<Driver, DriverVM>(driver);
 
-            return View(driver);
+            return View(driverVM);
         }
 
-        // POST: Drivers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var driver = await _context.Driver.FindAsync(id);
-            _context.Driver.Remove(driver);
+            var driver = await _context.Drivers.FindAsync(id);
+            _context.Drivers.Remove(driver);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+
+
+
         private bool DriverExists(int id)
         {
-            return _context.Driver.Any(e => e.Id == id);
+            return _context.Drivers.Any(e => e.Id == id);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿@model MB.Taxi.Entities.Driver
+﻿@model The_Test.Models.DriverVM
+@using MB.Taxi.Utils.Enums
 
 @{
+
     ViewData["Title"] = "Create";
 }
 
@@ -31,6 +33,11 @@
                 <label asp-for="Rating" class="control-label"></label>
                 <input asp-for="Rating" class="form-control" />
                 <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <select asp-for="Gender" asp-items="@Html.GetEnumSelectList<Gender>()" class="form-control"></select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

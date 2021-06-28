@@ -7,25 +7,38 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MB.Taxi.Entities;
 using The_Test.Data;
+using AutoMapper;
+using The_Test.Models;
 
 namespace The_Test.Controllers
 {
     public class BookingsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public BookingsController(ApplicationDbContext context)
+        public BookingsController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        // GET: Bookings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Booking.ToListAsync());
+            var bookings = await _context
+                                 .Bookings
+                                 .Include(booking => booking.Car)
+                                 .Include(booking => booking.Driver)
+                                 .ToListAsync();
+
+
+            var bookingVMs = _mapper.Map<List<Booking>, List<BookingVM>>(bookings);
+
+            return View(bookingVMs);
         }
 
-        // GET: Bookings/Details/5
+
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +46,42 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Booking
+            var booking = await _context.Bookings
+
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (booking == null)
             {
                 return NotFound();
             }
 
-            return View(booking);
+            var bookingVM = _mapper.Map<Booking, BookingVM>(booking);
+
+            return View(bookingVM);
         }
 
-        // GET: Bookings/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Bookings/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PickUpTime,FromAddress,ToAddress,Price,IsPaid,PaymentDate")] Booking booking)
+        public async Task<IActionResult> Create(BookingVM bookingVM)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(booking);
+
+                _context.Add(bookingVM);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            var booking = _mapper.Map<BookingVM, Booking>(bookingVM);
+
             return View(booking);
         }
 
-        // GET: Bookings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +89,20 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Booking.FindAsync(id);
+            var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {
                 return NotFound();
             }
-            return View(booking);
+
+            return View();
         }
 
-        // POST: Bookings/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PickUpTime,FromAddress,ToAddress,Price,IsPaid,PaymentDate")] Booking booking)
+        public async Task<IActionResult> Edit(int id, BookingVM bookingVM)
         {
-            if (id != booking.Id)
+            if (id != bookingVM.Id)
             {
                 return NotFound();
             }
@@ -97,12 +111,14 @@ namespace The_Test.Controllers
             {
                 try
                 {
+                    var booking = _mapper.Map<BookingVM, Booking>(bookingVM);
+
                     _context.Update(booking);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookingExists(booking.Id))
+                    if (!BookingExists(bookingVM.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +129,10 @@ namespace The_Test.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(booking);
+
+            return View(bookingVM);
         }
 
-        // GET: Bookings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,14 +140,16 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Booking
+            var booking = await _context.Bookings
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (booking == null)
             {
                 return NotFound();
             }
 
-            return View(booking);
+            var bookingVM = _mapper.Map<Booking, BookingVM>(booking);
+
+            return View(bookingVM);
         }
 
         // POST: Bookings/Delete/5
@@ -139,15 +157,31 @@ namespace The_Test.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var booking = await _context.Booking.FindAsync(id);
-            _context.Booking.Remove(booking);
+            var booking = await _context.Bookings.FindAsync(id);
+            _context.Bookings.Remove(booking);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PayForBooking(int bookingId)
+        {
+            var booking = await _context.Bookings.FindAsync(bookingId);
+
+            booking.IsPaid = true;
+
+            _context.Update(booking);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
         private bool BookingExists(int id)
         {
-            return _context.Booking.Any(e => e.Id == id);
+            return _context.Bookings.Any(e => e.Id == id);
         }
     }
 }

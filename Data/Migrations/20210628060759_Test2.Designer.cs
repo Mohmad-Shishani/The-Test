@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using The_Test.Data;
 
 namespace The_Test.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210628060759_Test2")]
+    partial class Test2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,8 +31,8 @@ namespace The_Test.Data.Migrations
                     b.Property<string>("FromAddress")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("bit");
+                    b.Property<string>("IsPaid")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
@@ -62,9 +64,6 @@ namespace The_Test.Data.Migrations
                     b.Property<int>("CarType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("DriverId")
-                        .HasColumnType("int");
-
                     b.Property<int>("FuelType")
                         .HasColumnType("int");
 
@@ -81,8 +80,6 @@ namespace The_Test.Data.Migrations
 
                     b.HasIndex("BookingId");
 
-                    b.HasIndex("DriverId");
-
                     b.ToTable("Cars");
                 });
 
@@ -94,6 +91,9 @@ namespace The_Test.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("BookingId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CarId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -115,6 +115,8 @@ namespace The_Test.Data.Migrations
 
                     b.HasIndex("BookingId");
 
+                    b.HasIndex("CarId");
+
                     b.ToTable("Drivers");
                 });
 
@@ -124,9 +126,6 @@ namespace The_Test.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("BookingId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -141,8 +140,6 @@ namespace The_Test.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookingId");
 
                     b.ToTable("Passengers");
                 });
@@ -347,37 +344,127 @@ namespace The_Test.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("The_Test.Models.BookingVM", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FromAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IsPaid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PickUpTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ToAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookingVM");
+                });
+
+            modelBuilder.Entity("The_Test.Models.CarVM", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BookingVMId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FuelType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MakeYear")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlateNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingVMId");
+
+                    b.ToTable("CarVM");
+                });
+
+            modelBuilder.Entity("The_Test.Models.DriverVM", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("BookingVMId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CarVMId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PhoneNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookingVMId");
+
+                    b.HasIndex("CarVMId");
+
+                    b.ToTable("DriverVM");
+                });
+
             modelBuilder.Entity("MB.Taxi.Entities.Car", b =>
                 {
-                    b.HasOne("MB.Taxi.Entities.Booking", "Booking")
-                        .WithMany("Car")
-                        .HasForeignKey("BookingId");
-
-                    b.HasOne("MB.Taxi.Entities.Driver", "Driver")
+                    b.HasOne("MB.Taxi.Entities.Booking", null)
                         .WithMany("Cars")
-                        .HasForeignKey("DriverId");
-
-                    b.Navigation("Booking");
-
-                    b.Navigation("Driver");
+                        .HasForeignKey("BookingId");
                 });
 
             modelBuilder.Entity("MB.Taxi.Entities.Driver", b =>
                 {
-                    b.HasOne("MB.Taxi.Entities.Booking", "Booking")
-                        .WithMany("Driver")
+                    b.HasOne("MB.Taxi.Entities.Booking", null)
+                        .WithMany("Drivers")
                         .HasForeignKey("BookingId");
 
-                    b.Navigation("Booking");
-                });
-
-            modelBuilder.Entity("MB.Taxi.Entities.Passenger", b =>
-                {
-                    b.HasOne("MB.Taxi.Entities.Booking", "Booking")
-                        .WithMany()
-                        .HasForeignKey("BookingId");
-
-                    b.Navigation("Booking");
+                    b.HasOne("MB.Taxi.Entities.Car", null)
+                        .WithMany("Drivers")
+                        .HasForeignKey("CarId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -431,16 +518,46 @@ namespace The_Test.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MB.Taxi.Entities.Booking", b =>
+            modelBuilder.Entity("The_Test.Models.CarVM", b =>
                 {
-                    b.Navigation("Car");
-
-                    b.Navigation("Driver");
+                    b.HasOne("The_Test.Models.BookingVM", null)
+                        .WithMany("Cars")
+                        .HasForeignKey("BookingVMId");
                 });
 
-            modelBuilder.Entity("MB.Taxi.Entities.Driver", b =>
+            modelBuilder.Entity("The_Test.Models.DriverVM", b =>
+                {
+                    b.HasOne("The_Test.Models.BookingVM", null)
+                        .WithMany("Drivers")
+                        .HasForeignKey("BookingVMId");
+
+                    b.HasOne("The_Test.Models.CarVM", null)
+                        .WithMany("Drivers")
+                        .HasForeignKey("CarVMId");
+                });
+
+            modelBuilder.Entity("MB.Taxi.Entities.Booking", b =>
                 {
                     b.Navigation("Cars");
+
+                    b.Navigation("Drivers");
+                });
+
+            modelBuilder.Entity("MB.Taxi.Entities.Car", b =>
+                {
+                    b.Navigation("Drivers");
+                });
+
+            modelBuilder.Entity("The_Test.Models.BookingVM", b =>
+                {
+                    b.Navigation("Cars");
+
+                    b.Navigation("Drivers");
+                });
+
+            modelBuilder.Entity("The_Test.Models.CarVM", b =>
+                {
+                    b.Navigation("Drivers");
                 });
 #pragma warning restore 612, 618
         }

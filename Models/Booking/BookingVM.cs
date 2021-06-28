@@ -23,10 +23,19 @@ namespace The_Test.Models
         public string ToAddress { get; set; }
 
         [Required]
-        [Display(Name = "Price ")]
         public double Price { get; set; }
-        public string IsPaid { get; set; }
+
+        [Required]
+        [Display(Name = "Is Paid ")]
+        public bool IsPaid { get; set; }
+
+        [Required]
+        [Display(Name = "Car")]
+
         public List<CarVM> Cars { get; set; }
+
+        [Required]
+        [Display(Name = "Driver")]
         public List<DriverVM> Drivers { get; set; }
 
         [Required]
