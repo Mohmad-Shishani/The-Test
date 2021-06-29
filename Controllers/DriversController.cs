@@ -40,7 +40,7 @@ namespace The_Test.Controllers
 
             var driver = await _context
                 .Drivers
-                .Include(driver => driver.Cars)
+                .Include(driver => driver.Car)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (driver == null)
