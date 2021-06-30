@@ -29,9 +29,5 @@ namespace The_Test.Models
 
         [Required]
         public CarType CarType { get; set; }
-
-        [Required]
-        [Display(Name = "Drivers ")]
-        public List<DriverVM> Drivers { get; set; }
     }
 }

@@ -8,6 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MB.Taxi.Entities\**" />
+    <Compile Remove="MB.Taxi.Utils\**" />
+    <Content Remove="MB.Taxi.Entities\**" />
+    <Content Remove="MB.Taxi.Utils\**" />
+    <EmbeddedResource Remove="MB.Taxi.Entities\**" />
+    <EmbeddedResource Remove="MB.Taxi.Utils\**" />
+    <None Remove="MB.Taxi.Entities\**" />
+    <None Remove="MB.Taxi.Utils\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.7" />
@@ -22,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MB.Taxi.Entities\MB.Taxi.Entities.csproj" />
-    <ProjectReference Include="..\MB.Taxi.Utils\MB.Taxi.Utils.csproj" />
+    <ProjectReference Include="MB.Taxi.Entities\MB.Taxi.Entities.csproj" />
+    <ProjectReference Include="MB.Taxi.Utils\MB.Taxi.Utils.csproj" />
   </ItemGroup>
 
 </Project>
