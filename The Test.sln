@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MB.Taxi.Entities", "..\MB.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MB.Taxi.Utils", "..\MB.Taxi.Utils\MB.Taxi.Utils.csproj", "{21B4EF7B-20A6-49F4-91E4-6D8E0AAC92D1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "The_Test", "The_Test", "{2482B280-8AB0-49E9-8451-68BB33021960}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EE668BEA-8277-412C-872C-1EAD4418A7E9} = {2482B280-8AB0-49E9-8451-68BB33021960}
+		{D364CE0A-211F-4217-ADC6-1F45786B8B5B} = {2482B280-8AB0-49E9-8451-68BB33021960}
+		{21B4EF7B-20A6-49F4-91E4-6D8E0AAC92D1} = {2482B280-8AB0-49E9-8451-68BB33021960}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A504191-275D-48BD-BCB9-1CA7618D6AE9}
