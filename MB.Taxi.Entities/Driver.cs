@@ -10,6 +10,11 @@ namespace MB.Taxi.Entities
 
     public class Driver
     {
+        public Driver()
+        {
+            Car = new List<Car>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

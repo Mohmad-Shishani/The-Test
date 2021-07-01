@@ -1,104 +1,121 @@
 ﻿@model IEnumerable<The_Test.Models.BookingVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Create Bookings";
 }
+<div class="container">
+    <h1>Bookings</h1>
 
-<h1>Bookings</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="thedatatable table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PickUpTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FromAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ToAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsPaid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PaymentDate)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var booking in Model)
-        {
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="thedatatable table">
+        <thead>
             <tr>
-                <td>
-                    @booking.PickUpTime.ToString("dddd, dd MMMM yyyy HH:mm")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => booking.FromAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => booking.ToAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => booking.Price)
-                </td>
-                <td>
-                    @if (booking.IsPaid)
-                    {
-                        <i class="fas fa-check-circle" data-toggle="tooltip" data-placement="bottom" title="It's Paid"></i>
-                    }
+                <th>
+                    @Html.DisplayNameFor(model => model.PickUpTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FromAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsPaid)
+                </th>
 
-                    else
-                    {
-                        <i class="fas fa-times-circle " data-toggle="tooltip" data-placement="bottom" title="Where is the Money Lebawski?"></i>
-                    }
+                <th>
+                    @Html.DisplayNameFor(model => model.CarId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DriverId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PaymentDate)
+                </th>
+                <th>
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => booking.PaymentDate)
-                </td>
-                <td>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Model)
+            {
+                <tr>
+                    <td>
+                        @booking.PickUpTime.ToString("dddd, dd MMMM yyyy HH:mm")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => booking.FromAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => booking.ToAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => booking.Price)
+                    </td>
+                    <td>
+                        @if (booking.IsPaid)
+                        {
+                            <i class="fas fa-check-circle" data-toggle="tooltip" data-placement="bottom" title="It has been Paid on @booking.PaymentDate.ToLongDateString()"></i>
+                        }
 
-                    <a asp-action="Edit" asp-route-id="@booking.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@booking.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@booking.Id">Delete</a> |
-                    @if (booking.IsPaid == false)
-                    {
-                        <i class="fab fa-paypal text-primary" data-toggle="modal" data-target="PayForBookingModal_@booking.Id"></i>
-                    }
+                        else
+                        {
+                            <i class="fas fa-times-circle " data-toggle="tooltip" data-placement="bottom" title="Where is the Money Lebawski?"></i>
+                        }
 
+                    </td>
+                    <td>
 
-                    <div class="modal fade" id="PayForBookingModal_@booking.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="PayForBookingModalLongTitle">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <h4>Do you want to pay for your the Booking?</h4>
-                                </div>
-                                <div class="modal-footer">
-                                    <form asp-action="PayForBooking">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </form>
+                        <a asp-action="Edit" asp-route-id="@booking.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@booking.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@booking.Id">Delete</a> |
 
+                        @if (booking.IsPaid == false)
+                        {
+                            <span data-toggle="tooltip" title="Pay Ticket">
+                                <i class="fab fa-paypal pointer" data-toggle="modal" data-target="#payBookingModal_@booking.Id"></i>
+                            </span>
+                        }
+                        <!-- Pay Booking Modal -->
+                        <div class="modal fade" id="payBookingModalLabel_@booking.Id" tabindex="-1" role="dialog" aria-labelledby="payBookingModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="payBookingModalLabel_@booking.Id">Pay For Booking?</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h4 class="text-danger mb-5">Are you sure you want to pay this Booking?</h4>
+
+                                        <h6>Your Credit Card info won't be needed</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form asp-action="PayBooking">
+                                            <input type="hidden" value="@booking.Id" name="bookingId" />
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <input type="submit" value="Yes" class="btn btn-primary ml-1" />
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => booking.CarId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => booking.DriverId)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

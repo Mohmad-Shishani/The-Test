@@ -1,20 +1,15 @@
-﻿using MB.Taxi.Entities;
-using MB.Taxi.Utils.Enums;
+﻿using MB.Taxi.Utils.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace The_Test.Models
+namespace The_Test.Models.Driver
 {
-    public class DriverVM
+    public class CreateEditDriverVM
     {
-        public DriverVM()
-        {
-            Car = new List<CarVM>();
-        }
-
         public int Id { get; set; }
 
         [Required]
@@ -36,6 +31,15 @@ namespace The_Test.Models
 
         [Required]
         public Gender Gender { get; set; }
-        public List<CarVM> Car { get; }
+
+
+        [Display(Name = "Cars")]
+        public List<int> CarIds { get; set; }
+
+        public int DriverId { get; set; }
+        public string DriverName { get; set; }
+
+        public SelectList CarSelectList { get; set; }
+
     }
 }

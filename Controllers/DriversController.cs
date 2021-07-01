@@ -7,6 +7,8 @@ using The_Test.Data;
 using AutoMapper;
 using The_Test.Models;
 using MB.Taxi.Entities;
+using The_Test.Helpler.LookupService;
+using The_Test.Models.Driver;
 
 namespace The_Test.Controllers
 {
@@ -14,16 +16,19 @@ namespace The_Test.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public DriversController(ApplicationDbContext context, IMapper mapper)
+        private readonly ILookupService _lookupService;
+        public DriversController(ApplicationDbContext context, IMapper mapper, ILookupService lookupService)
         {
             _context = context;
             _mapper = mapper;
+            _lookupService = lookupService;
         }
 
         public async Task<IActionResult> Index()
         {
             List<Driver> drivers = await _context
                                          .Drivers
+                                         //.Include(driver => driver.Car)
                                          .ToListAsync();
 
             List<DriverVM> driverVMs = _mapper.Map<List<Driver>, List<DriverVM>>(drivers);
@@ -39,9 +44,9 @@ namespace The_Test.Controllers
             }
 
             var driver = await _context
-                .Drivers
-                .Include(driver => driver.Car)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                                 .Drivers
+                                 .Include(driver => driver.Car)
+                                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (driver == null)
             {
@@ -158,7 +163,42 @@ namespace The_Test.Controllers
         }
 
 
+        //public async Task<IActionResult> AddCourse(int studentId)
+        //{
+        //    var driverVM = new CreateEditDriverVM();
 
+        //    carVM.DriverId = studentId;
+
+        //    carVM.DriverName = await _context
+        //                                .Drivers
+        //                                .Where(student => student.Id == studentId)
+        //                                .Select(student => student.FullName)
+        //                                .SingleAsync();
+
+        //    carVM.CarSelectList = await _lookupService.GetCarSelectList(driverVM);
+
+
+        //    return View(courseVM);
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> AddCar(CreateEditDriverVM createEditDriverVM)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var  car = await _context.Cars.FindAsync(carVM.Id);
+        //        var driver = await _context.Drivers.FindAsync(carVM.DriverId);
+
+        //        car.Driver.Add(driver);
+
+        //        _context.Update(car);
+        //        await _context.SaveChangesAsync();
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    return View(carVM);
+        //}
 
         private bool DriverExists(int id)
         {

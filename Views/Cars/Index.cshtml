@@ -1,61 +1,64 @@
 ﻿@model IEnumerable<The_Test.Models.CarVM>
-@using MB.Taxi.Utils.Enums
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Carz</h1>
+<div class="container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="thedatatable table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PlateNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MakeYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FuelType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var Car in Model)
-        {
+    <h1>Carz</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="thedatatable table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Car.PlateNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Car.Name)
-                </td>
-                <td>
-                    @Car.MakeYear.ToString("dddd, dd MMMM yyyy HH:mm")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Car.FuelType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Car.CarType)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@Car.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@Car.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@Car.Id">Delete</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.PlateNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MakeYear)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FuelType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarType)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var Car in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Car.PlateNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Car.Name)
+                    </td>
+                    <td>
+                        @Car.MakeYear.ToString("dddd, dd MMMM yyyy HH:mm")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Car.FuelType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Car.CarType)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@Car.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@Car.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@Car.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

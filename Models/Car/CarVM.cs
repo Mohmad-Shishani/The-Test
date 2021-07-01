@@ -29,5 +29,7 @@ namespace The_Test.Models
 
         [Required]
         public CarType CarType { get; set; }
+
+        public int DriverId { get; set; }
     }
 }

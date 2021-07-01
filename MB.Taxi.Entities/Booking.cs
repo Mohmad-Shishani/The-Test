@@ -15,10 +15,16 @@ namespace MB.Taxi.Entities
         public double Price { get; set; }
         public bool IsPaid { get; set; }
 
-
+        public int CarId { get; set; }
         public Car Car { get; set; }
+
+        public int DriverId { get; set; }
         public Driver Driver { get; set; }
-        public List<Passenger> Passengers { get; set; }
-        public DateTime PaymentDate { get; set; }
+
+        public int PassengerId { get; set; }
+
+        public List<Passenger> Passenger { get; set; }
+
+        public DateTime? PaymentDate { get; set; }
     }
 }

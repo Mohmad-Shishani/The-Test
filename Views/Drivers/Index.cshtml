@@ -5,62 +5,66 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Drivers</h1>
+<div class="container">
+    <h1>Drivers</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="thedatatable table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-
-            <th>
-                
-            </th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var Driver in Model)
-        {
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="thedatatable table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => Driver.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Driver.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Driver.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Driver.Rating)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => Driver.Gender)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@Driver.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@Driver.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@Driver.Id">Delete</a> |
-                    <a asp-action="DriverCars" data-toggle="tooltip" title="Driver's Cars" asp-route-id="@Driver.Id">Add Car</a>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+
+                <th>
+
+                </th>
+
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
+                        <a asp-action="DriverCars" data-toggle="tooltip" title="Driver's Cars" asp-route-id="@item.Id">Add Car</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+

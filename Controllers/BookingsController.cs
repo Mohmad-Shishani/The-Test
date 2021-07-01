@@ -9,6 +9,8 @@ using MB.Taxi.Entities;
 using The_Test.Data;
 using AutoMapper;
 using The_Test.Models;
+using The_Test.Helpler.LookupService;
+using The_Test.Models.Booking;
 
 namespace The_Test.Controllers
 {
@@ -16,11 +18,14 @@ namespace The_Test.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly ILookupService _lookupService;
 
-        public BookingsController(ApplicationDbContext context, IMapper mapper)
+
+        public BookingsController(ApplicationDbContext context, IMapper mapper , ILookupService lookupService)
         {
             _context = context;
             _mapper = mapper;
+            _lookupService = lookupService;
         }
 
         public async Task<IActionResult> Index()
@@ -29,6 +34,7 @@ namespace The_Test.Controllers
                                  .Bookings
                                  .Include(booking => booking.Car)
                                  .Include(booking => booking.Driver)
+                                 .Include(booking => booking.Passenger)
                                  .ToListAsync();
 
 
@@ -46,9 +52,13 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings
+            var booking = await _context
+                                .Bookings
+                                .Include(booking => booking.Car)
+                                .Include(booking => booking.Driver)
+                                .Include(booking => booking.Passenger)
+                                .FirstOrDefaultAsync(m => m.Id == id);
 
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (booking == null)
             {
                 return NotFound();
@@ -59,27 +69,39 @@ namespace The_Test.Controllers
             return View(bookingVM);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            return View();
+            var createEditBookingVM = new CreateEditBookingVM();
+
+            createEditBookingVM.CarSelectList = await _lookupService.GetCarSelectList();
+            createEditBookingVM.DriverSelectList = await _lookupService.GetDriverSelectList();
+            createEditBookingVM.PassengerSelectList = await _lookupService.GetPassengerSelectList();
+
+            return View(createEditBookingVM);
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(BookingVM bookingVM)
+        public async Task<IActionResult> Create(CreateEditBookingVM bookingVM)
         {
             if (ModelState.IsValid)
             {
 
-                _context.Add(bookingVM);
+                var booking = _mapper.Map<CreateEditBookingVM, Booking>(bookingVM);
+
+                _context.Add(booking);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            var booking = _mapper.Map<BookingVM, Booking>(bookingVM);
+            var createEditBookingVM = new CreateEditBookingVM();
 
-            return View(booking);
+            createEditBookingVM.CarSelectList = await _lookupService.GetCarSelectList();
+            createEditBookingVM.DriverSelectList = await _lookupService.GetDriverSelectList();
+            createEditBookingVM.PassengerSelectList = await _lookupService.GetPassengerSelectList();
+
+            return View(bookingVM);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -89,18 +111,29 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = await _context
+                                .Bookings
+                                .Include(booking => booking.Car)
+                                .Include(booking => booking.Driver)
+                                .FirstOrDefaultAsync(m => m.Id == id);
+
             if (booking == null)
             {
                 return NotFound();
             }
 
-            return View();
+            var bookingVM = _mapper.Map<Booking,CreateEditBookingVM>(booking);
+
+            bookingVM.CarSelectList = await _lookupService.GetCarSelectList();
+            bookingVM.DriverSelectList = await _lookupService.GetDriverSelectList();
+            bookingVM.PassengerSelectList = await _lookupService.GetPassengerSelectList();
+
+            return View(bookingVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, BookingVM bookingVM)
+        public async Task<IActionResult> Edit(int id, CreateEditBookingVM bookingVM)
         {
             if (id != bookingVM.Id)
             {
@@ -111,7 +144,7 @@ namespace The_Test.Controllers
             {
                 try
                 {
-                    var booking = _mapper.Map<BookingVM, Booking>(bookingVM);
+                    var booking = _mapper.Map<CreateEditBookingVM, Booking>(bookingVM);
 
                     _context.Update(booking);
                     await _context.SaveChangesAsync();
@@ -129,7 +162,6 @@ namespace The_Test.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-
             return View(bookingVM);
         }
 
@@ -152,7 +184,6 @@ namespace The_Test.Controllers
             return View(bookingVM);
         }
 
-        // POST: Bookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -171,6 +202,7 @@ namespace The_Test.Controllers
             var booking = await _context.Bookings.FindAsync(bookingId);
 
             booking.IsPaid = true;
+            booking.PaymentDate = DateTime.Now;
 
             _context.Update(booking);
             await _context.SaveChangesAsync();

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using The_Test.Data;
+using The_Test.Helpler.LookupService;
 
 namespace The_Test
 {
@@ -27,7 +28,10 @@ namespace The_Test
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<ILookupService, LookupService>();
+
             services.AddAutoMapper (typeof(Startup));
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

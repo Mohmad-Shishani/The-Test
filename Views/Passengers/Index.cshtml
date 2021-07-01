@@ -4,52 +4,58 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Passengers</h1>
+<div class="container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="thedatatable table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
+    <h1>Passengers</h1>
 
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var Passenger in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => Passenger.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Passenger.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Passenger.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => Passenger.Gender)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@Passenger.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@Passenger.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@Passenger.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="thedatatable table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Passenger in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Passenger.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Passenger.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Passenger.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Passenger.Gender)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@Passenger.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@Passenger.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@Passenger.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
