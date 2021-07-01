@@ -31,14 +31,14 @@ namespace The_Test.Models.Booking
 
         [Required]
         [Display(Name = "Car")]
-        public CarVM Car { get; set; }
+        public int CarId { get; set; }
 
         [Required]
         [Display(Name = "Driver")]
-        public DriverVM Driver { get; set; }
+        public int DriverId { get; set; }
 
         [Required]
-        public List<PassengerVM> Passenger { get; set; }
+        public List<int> PassengerIds { get; set; }
 
         public DateTime PaymentDate { get; set; }
 
