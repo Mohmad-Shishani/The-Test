@@ -136,10 +136,9 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var passengerVM = _mapper.Map<Passenger, PassengerVM>(passenger);
 
 
-            return View(passengerVM);
+            return View(passenger);
         }
 
         [HttpPost, ActionName("Delete")]

@@ -139,9 +139,7 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var carVM = _mapper.Map<Car, CarVM>(car);
-
-            return View(carVM);
+             return View(car);
         }
 
         [HttpPost, ActionName("Delete")]

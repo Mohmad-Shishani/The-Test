@@ -148,9 +148,8 @@ namespace The_Test.Controllers
             {
                 return NotFound();
             }
-            var driverVM = _mapper.Map<Driver, DriverVM>(driver);
 
-            return View(driverVM);
+            return View(driver);
         }
 
         [HttpPost, ActionName("Delete")]

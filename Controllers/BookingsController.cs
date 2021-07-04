@@ -188,9 +188,7 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var bookingVM = _mapper.Map<Booking, BookingVM>(booking);
-
-            return View(bookingVM);
+            return View(booking);
         }
 
         [HttpPost, ActionName("Delete")]
