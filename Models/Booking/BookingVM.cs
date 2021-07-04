@@ -8,6 +8,10 @@ namespace The_Test.Models
 {
     public class BookingVM
     {
+        public BookingVM()
+        {
+            Passengers = new List<PassengerVM>();
+        }
         public int Id { get; set; }
 
         [Required]
@@ -26,24 +30,14 @@ namespace The_Test.Models
         public double Price { get; set; }
 
         [Required]
-        [Display(Name = "Is Paid ")]
+        [Display(Name = "Is it Paid ?")]
         public bool IsPaid { get; set; }
 
-        [Display(Name = "Car")]
-
-        public int CarId { get; set; }
-
-        [Display(Name = "Driver")]
-        public int DriverId { get; set; }
-
-        public List<int> PassengerId { get; set; }
-
-
-        [Required]
         [Display(Name = "Payment Date")]
         public DateTime PaymentDate { get; set; }
 
-
-
+        public CarVM Car { get; set; }
+        public DriverVM Driver { get; set; }
+        public List<PassengerVM> Passengers { get; set; }
     }
 }

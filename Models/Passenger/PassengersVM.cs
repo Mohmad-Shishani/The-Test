@@ -9,14 +9,16 @@ namespace The_Test.Models
 {
     public class PassengerVM
     {
+        public PassengerVM()
+        {
+            Booking = new List<BookingVM>();
+        }
         public int Id { get; set; }
 
         [Required]
-        [Display (Name = "Name")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
@@ -25,5 +27,7 @@ namespace The_Test.Models
 
         [Required]
         public Gender Gender { get; set; }
+
+        public List<BookingVM> Booking { get; set; }
     }
 }

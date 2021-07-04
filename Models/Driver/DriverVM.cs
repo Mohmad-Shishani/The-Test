@@ -12,17 +12,16 @@ namespace The_Test.Models
     {
         public DriverVM()
         {
+            Booking = new List<BookingVM>();
             Car = new List<CarVM>();
         }
 
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Name")]
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
         public string Email { get; set; }
 
 
@@ -31,11 +30,12 @@ namespace The_Test.Models
         public int PhoneNumber { get; set; }
 
 
-        [Display(Name = "Rating")]
         public int Rating { get; set; }
 
         [Required]
         public Gender Gender { get; set; }
+
+        public List<BookingVM> Booking { get; set; }
         public List<CarVM> Car { get; }
     }
 }

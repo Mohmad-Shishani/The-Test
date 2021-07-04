@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using MB.Taxi.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using The_Test.Models;
+using The_Test.Models.Booking;
 
 namespace The_Test.AutoMapper
 {
@@ -13,6 +10,7 @@ namespace The_Test.AutoMapper
         public BookingProfile()
         {
             CreateMap<Booking, BookingVM>().ReverseMap();
+            CreateMap<Booking, CreateEditBookingVM>().ReverseMap();
         }
     }
 }

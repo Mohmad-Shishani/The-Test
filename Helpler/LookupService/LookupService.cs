@@ -17,9 +17,25 @@ namespace The_Test.Helpler.LookupService
             _context = context;
         }
 
+        public async Task<SelectList> GetBookingSelectList()
+        {
+            var booking = await _context
+                                    .Bookings
+                                    .Select(booking => new LookupVM()
+                                    {
+                                        Id = booking.Id,
+                                        Name = booking.FromAddress
+                                    })
+                                    .ToListAsync();
+
+            var bookingSelectList = new SelectList(booking, "Id", "Name");
+
+            return bookingSelectList;
+        }
+
         public async Task<SelectList> GetCarSelectList()
         {
-            var carsLookup = await _context
+            var car = await _context
                                     .Cars
                                     .Select(car => new LookupVM()
                                     {
@@ -28,14 +44,14 @@ namespace The_Test.Helpler.LookupService
                                     })
                                     .ToListAsync();
 
-            var carSelectList = new SelectList(carsLookup, "Id", "Name");
+            var carSelectList = new SelectList(car, "Id", "Name");
 
             return carSelectList;
         }
 
         public async Task<SelectList> GetDriverSelectList()
         {
-            var driversLookup = await _context
+            var driver = await _context
                                        .Drivers
                                        .Select(driver => new LookupVM()
                                        {
@@ -44,14 +60,14 @@ namespace The_Test.Helpler.LookupService
                                        })
                                        .ToListAsync();
 
-            var driverSelectList = new SelectList(driversLookup, "Id", "Name");
+            var driverSelectList = new SelectList(driver, "Id", "Name");
 
             return driverSelectList;
         }
 
         public async Task<SelectList> GetPassengerSelectList()
         {
-            var passengersLookup = await _context
+            var passenger = await _context
                                              .Passengers
                                              .Select(passenger => new LookupVM()
                                              {
@@ -60,10 +76,12 @@ namespace The_Test.Helpler.LookupService
                                              })
                                              .ToListAsync();
 
-            var passengerSelectList = new SelectList(passengersLookup, "Id", "Name");
+            var passengerSelectList = new SelectList(passenger, "Id", "Name");
 
             return passengerSelectList;
         }
+
+
 
     }
 }

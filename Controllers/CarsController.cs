@@ -38,8 +38,9 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var car = await _context.Cars
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var car = await _context
+                                    .Cars
+                                    .FirstOrDefaultAsync(m => m.Id == id);
             if (car == null)
             {
                 return NotFound();

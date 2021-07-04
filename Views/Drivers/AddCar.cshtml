@@ -1,39 +1,29 @@
 ﻿@model The_Test.Models.Driver.CreateEditDriverVM
 
-
 @{
     ViewData["Title"] = "Add Car";
 }
 
 <div class="container my-5">
-    <h1>Add Course</h1>
+    <h1>Add Car To Driver</h1>
 
-    <h4>Driver: @Model.DriverName</h4>
+    <h4>Driver: @Model.Name</h4>
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="AddCar">
+            <form asp-action="AddCarSave">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                @if (Model.CarSelectList.Count() > 0)
-                {
-                    <div class="form-group">
-                        <label asp-for="Id" class="control-label">Car</label>
-                        <select asp-for="Id" asp-items="@Model.CarSelectList" class="form-control"></select>
-                        <span asp-validation-for="Id" class="text-danger"></span>
-                    </div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="CarId" class="control-label">Car</label>
+                    <select asp-for="CarId" asp-items="@Model.GetCarSelectList" class="form-control"></select>
+                    <span asp-validation-for="CarId" class="text-danger"></span>
+                </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                    </div>
-                }
-                else
-                {
-                    <h4>
-                        There is no courses left to enroll in
-                    </h4>
-                }
+                <div class="form-group">
+                    <input type="submit" value="Add Car" class="btn btn-primary" />
+                </div>
 
-                <input type="hidden" value="@Model.DriverId" name="DriverId" />
             </form>
         </div>
     </div>

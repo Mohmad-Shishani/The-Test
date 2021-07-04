@@ -26,14 +26,13 @@ namespace The_Test.Controllers
 
         public async Task<IActionResult> Index()
         {
-            List<Driver> drivers = await _context
+            var driver  = await _context
                                          .Drivers
-                                         //.Include(driver => driver.Car)
                                          .ToListAsync();
 
-            List<DriverVM> driverVMs = _mapper.Map<List<Driver>, List<DriverVM>>(drivers);
+            var driverVM  = _mapper.Map<List<Driver>, List<DriverVM>>(driver);
 
-            return View(driverVMs);
+            return View(driverVM);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -45,7 +44,6 @@ namespace The_Test.Controllers
 
             var driver = await _context
                                  .Drivers
-                                 .Include(driver => driver.Car)
                                  .FirstOrDefaultAsync(m => m.Id == id);
 
             if (driver == null)
@@ -87,7 +85,10 @@ namespace The_Test.Controllers
                 return NotFound();
             }
 
-            var driver = await _context.Drivers.FindAsync(id);
+            var driver = await _context
+                                .Drivers
+                                .FirstOrDefaultAsync(x => x.Id == id); 
+
             if (driver == null)
             {
                 return NotFound();
@@ -163,42 +164,36 @@ namespace The_Test.Controllers
         }
 
 
-        //public async Task<IActionResult> AddCourse(int studentId)
-        //{
-        //    var driverVM = new CreateEditDriverVM();
+        public async Task<IActionResult> AddCar(int? Id)
+        {
+            var driver = await _context
+                                .Drivers
+                                .Where(x => x.Id == Id)
+                                .SingleOrDefaultAsync();
 
-        //    carVM.DriverId = studentId;
+            var driverVM = _mapper.Map<Driver, CreateEditDriverVM>(driver);
 
-        //    carVM.DriverName = await _context
-        //                                .Drivers
-        //                                .Where(student => student.Id == studentId)
-        //                                .Select(student => student.FullName)
-        //                                .SingleAsync();
+            driverVM.GetCarSelectList = await _lookupService.GetCarSelectList();
 
-        //    carVM.CarSelectList = await _lookupService.GetCarSelectList(driverVM);
+            return View(driverVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCarSave(int? Id, int CarId )
+        {
+            var driver = await _context.Drivers.FindAsync(Id);
+
+            var car = await _context.Cars.FindAsync(CarId);
+            driver.Car.Add(car);
+
+            _context.Update(driver);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
 
 
-        //    return View(courseVM);
-        //}
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddCar(CreateEditDriverVM createEditDriverVM)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var  car = await _context.Cars.FindAsync(carVM.Id);
-        //        var driver = await _context.Drivers.FindAsync(carVM.DriverId);
-
-        //        car.Driver.Add(driver);
-
-        //        _context.Update(car);
-        //        await _context.SaveChangesAsync();
-
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    return View(carVM);
-        //}
 
         private bool DriverExists(int id)
         {

@@ -2,13 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace The_Test.Models.Booking
 {
     public class CreateEditBookingVM
     {
+        public CreateEditBookingVM()
+        {
+            PassengerIds = new List<int>();
+        }
+
         public int Id { get; set; }
 
         [Required]
@@ -27,23 +30,17 @@ namespace The_Test.Models.Booking
         public double Price { get; set; }
 
         public bool IsPaid { get; set; }
-
-
-        [Required]
-        [Display(Name = "Car")]
-        public int CarId { get; set; }
-
-        [Required]
-        [Display(Name = "Driver")]
-        public int DriverId { get; set; }
-
-        [Required]
-        public List<int> PassengerIds { get; set; }
-
         public DateTime PaymentDate { get; set; }
 
-        public SelectList CarSelectList { get; set; }
-        public SelectList DriverSelectList { get; set; }
-        public SelectList PassengerSelectList { get; set; }
+
+        public int CarId { get; set; }
+        public SelectList GetCarSelectList { get; set; }
+
+        public int DriverId { get; set; }
+        public SelectList GetDriverSelectList { get; set; }
+
+        public List<int> PassengerIds { get; set; }
+        public SelectList GetPassengerSelectList { get; set; }
+
     }
 }

@@ -12,6 +12,7 @@ namespace MB.Taxi.Entities
     {
         public Driver()
         {
+            Booking = new List<Booking>();
             Car = new List<Car>();
         }
 
@@ -22,5 +23,6 @@ namespace MB.Taxi.Entities
         public int Rating { get; set; }
         public Gender Gender { get; set; }
         public List<Car> Car { get; set; }
+        public List<Booking> Booking { get; set; }
     }
 }

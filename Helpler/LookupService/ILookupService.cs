@@ -11,6 +11,6 @@ namespace The_Test.Helpler.LookupService
         public Task<SelectList> GetCarSelectList();
         public Task<SelectList> GetDriverSelectList();
         public Task<SelectList> GetPassengerSelectList();
-
+        public Task<SelectList> GetBookingSelectList();
     }
 }

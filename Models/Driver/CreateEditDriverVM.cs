@@ -20,7 +20,6 @@ namespace The_Test.Models.Driver
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-
         [Required]
         [Display(Name = "Phone Number")]
         public int PhoneNumber { get; set; }
@@ -32,14 +31,9 @@ namespace The_Test.Models.Driver
         [Required]
         public Gender Gender { get; set; }
 
-
-        [Display(Name = "Cars")]
-        public List<int> CarIds { get; set; }
-
-        public int DriverId { get; set; }
-        public string DriverName { get; set; }
-
-        public SelectList CarSelectList { get; set; }
+        [Required]
+        public int CarId { get; set; }
+        public SelectList GetCarSelectList { get; set; }
 
     }
 }
