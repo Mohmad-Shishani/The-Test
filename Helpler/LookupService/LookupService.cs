@@ -65,7 +65,7 @@ namespace The_Test.Helpler.LookupService
             return driverSelectList;
         }
 
-        public async Task<SelectList> GetPassengerSelectList()
+        public async Task<MultiSelectList> GetPassengerSelectList()
         {
             var passenger = await _context
                                              .Passengers
@@ -76,7 +76,7 @@ namespace The_Test.Helpler.LookupService
                                              })
                                              .ToListAsync();
 
-            var passengerSelectList = new SelectList(passenger, "Id", "Name");
+            var passengerSelectList = new MultiSelectList(passenger, "Id", "Name");
 
             return passengerSelectList;
         }

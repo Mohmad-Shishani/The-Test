@@ -40,7 +40,7 @@ namespace The_Test.Models.Booking
         public SelectList GetDriverSelectList { get; set; }
 
         public List<int> PassengerIds { get; set; }
-        public SelectList GetPassengerSelectList { get; set; }
+        public MultiSelectList GetPassengerSelectList { get; set; }
 
     }
 }

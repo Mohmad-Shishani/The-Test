@@ -73,8 +73,7 @@ namespace The_Test.Controllers
             {
                 GetCarSelectList = await _lookupService.GetCarSelectList(),
                 GetDriverSelectList = await _lookupService.GetDriverSelectList(),
-                GetPassengerSelectList = await _lookupService.GetPassengerSelectList(),
-                PaymentDate = DateTime.Now
+                GetPassengerSelectList = await _lookupService.GetPassengerSelectList()
             };
 
 
@@ -123,6 +122,9 @@ namespace The_Test.Controllers
 
             var booking = await _context
                                 .Bookings
+                                .Include(booking => booking.Car)
+                                .Include(booking => booking.Driver)
+                                .Include(booking => booking.Passengers)
                                 .FirstOrDefaultAsync(booking => booking.Id == id);
 
             if (booking == null)
@@ -135,7 +137,6 @@ namespace The_Test.Controllers
             bookingVM.GetCarSelectList = await _lookupService.GetCarSelectList();
             bookingVM.GetDriverSelectList = await _lookupService.GetDriverSelectList();
             bookingVM.GetPassengerSelectList = await _lookupService.GetPassengerSelectList();
-            bookingVM.PaymentDate = DateTime.Now;
 
             return View(bookingVM);
         }
